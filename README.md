@@ -1,70 +1,390 @@
-# Getting Started with Create React App
+# Shopify React Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern headless Shopify storefront built with **React, Vite, Tailwind CSS, React Router, and Shopify Storefront API**.
 
-## Available Scripts
+The project uses a service-based architecture so Shopify API logic stays separate from React UI components.
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+* React 19
+* Vite
+* Tailwind CSS 4
+* React Router
+* Shopify Storefront API
+* `@shopify/storefront-api-client`
+* JavaScript / JSX
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```text
+shopify-react-shop/
+│
+├── public/
+│
+├── src/
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Header.jsx
+│   │   │   └── Footer.jsx
+│   │   │
+│   │   ├── products/
+│   │   │   ├── ProductCard.jsx
+│   │   │   ├── ProductGrid.jsx
+│   │   │   └── ProductFilter.jsx
+│   │   │
+│   │   └── cart/
+│   │       ├── CartItem.jsx
+│   │       └── CartSummary.jsx
+│   │
+│   ├── pages/
+│   │   ├── HomePage.jsx
+│   │   ├── ProductsPage.jsx
+│   │   ├── ProductDetailsPage.jsx
+│   │   └── CartPage.jsx
+│   │
+│   ├── services/
+│   │   ├── shopifyClient.js
+│   │   ├── productService.js
+│   │   ├── collectionService.js
+│   │   └── cartService.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── index.html
+├── package.json
+└── vite.config.js
+```
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Shopify product listing
+* Product search
+* Product details
+* Product variants
+* Add to cart
+* Remove from cart
+* Cart quantity
+* Shopify checkout
+* React Router navigation
+* Responsive Tailwind UI
+* Shopify API service layer
+* Environment-based Shopify configuration
 
-### `npm run build`
+## Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Make sure you have:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Node.js installed
+* npm installed
+* A Shopify store
+* Shopify Storefront API access
+* Storefront API access token
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Check Node.js:
 
-### `npm run eject`
+```bash
+node --version
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Check npm:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm --version
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Clone the repository:
 
-## Learn More
+```bash
+git clone <your-repository-url>
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Go into the project:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd shopify-react-shop
+```
 
-### Code Splitting
+Install dependencies:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm install
+```
 
-### Analyzing the Bundle Size
+## Environment Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Create a `.env` file in the project root:
 
-### Making a Progressive Web App
+```env
+VITE_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+VITE_SHOPIFY_STOREFRONT_TOKEN=your_storefront_token
+VITE_SHOPIFY_API_VERSION=2026-07
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Do not commit `.env` to Git.
 
-### Advanced Configuration
+Use `.env.example` as a template:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```env
+VITE_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+VITE_SHOPIFY_STOREFRONT_TOKEN=your_storefront_token
+VITE_SHOPIFY_API_VERSION=2026-07
+```
 
-### Deployment
+## Start Development Server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Run:
 
-### `npm run build` fails to minify
+```bash
+npm run dev
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The application will normally be available at:
+
+```text
+http://localhost:5173/
+```
+
+## Available Routes
+
+| Route               | Description     |
+| ------------------- | --------------- |
+| `/`                 | Home page       |
+| `/products`         | Product listing |
+| `/products/:handle` | Product details |
+| `/cart`             | Shopping cart   |
+
+Example:
+
+```text
+http://localhost:5173/
+http://localhost:5173/products
+http://localhost:5173/products/t-shirt
+http://localhost:5173/cart
+```
+
+## Build for Production
+
+Create a production build:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Shopify Architecture
+
+The application follows this architecture:
+
+```text
+React Components
+       │
+       ▼
+Pages
+       │
+       ▼
+Services
+       │
+       ▼
+Shopify Storefront API
+       │
+       ▼
+Shopify Store
+```
+
+For example:
+
+```text
+ProductsPage
+      │
+      ▼
+productService.js
+      │
+      ▼
+shopifyClient.js
+      │
+      ▼
+Shopify Storefront API
+      │
+      ▼
+Shopify Products
+```
+
+## Services
+
+### `shopifyClient.js`
+
+Creates the Shopify Storefront API client.
+
+### `productService.js`
+
+Handles:
+
+* Product listing
+* Product search
+* Product details
+* Product variants
+
+### `collectionService.js`
+
+Handles Shopify collections.
+
+### `cartService.js`
+
+Handles:
+
+* Create cart
+* Add product to cart
+* Get cart
+* Remove cart items
+* Shopify checkout URL
+
+## Tailwind CSS
+
+Tailwind CSS is used for the application UI.
+
+The main stylesheet contains:
+
+```css
+@import "tailwindcss";
+```
+
+Tailwind classes are used directly inside React components.
+
+Example:
+
+```jsx
+<button className="rounded-lg bg-black px-5 py-3 text-white hover:bg-gray-800">
+  Add to Cart
+</button>
+```
+
+## React Router
+
+Routes are configured in `App.jsx`.
+
+Example:
+
+```jsx
+<Route
+  path="/products"
+  element={<ProductsPage />}
+/>
+```
+
+Product details use a dynamic route:
+
+```jsx
+<Route
+  path="/products/:handle"
+  element={<ProductDetailsPage />}
+/>
+```
+
+## Security
+
+Never commit Shopify credentials.
+
+The following file should remain local:
+
+```text
+.env
+```
+
+Make sure `.gitignore` contains:
+
+```gitignore
+.env
+.env.local
+.env.*.local
+```
+
+Only use a **public Storefront API token** in a browser-based React application. Private credentials should remain on a server-side application.
+
+## Git
+
+Initialize the repository:
+
+```bash
+git init
+```
+
+Add files:
+
+```bash
+git add .
+```
+
+Check files before committing:
+
+```bash
+git status
+```
+
+Commit:
+
+```bash
+git commit -m "Initial Shopify React store"
+```
+
+## Development Workflow
+
+Typical development workflow:
+
+```text
+1. Start Shopify Store
+        ↓
+2. Configure Storefront API
+        ↓
+3. Configure .env
+        ↓
+4. npm install
+        ↓
+5. npm run dev
+        ↓
+6. Develop React components
+        ↓
+7. Test Shopify API
+        ↓
+8. npm run build
+```
+
+## Future Improvements
+
+Possible additions:
+
+* Collection pages
+* Advanced product filtering
+* Pagination
+* Product sorting
+* Cart quantity updates
+* Wishlist
+* Customer accounts
+* Login / registration
+* Order history
+* Responsive mobile navigation
+* Product reviews
+* Discount codes
+* Shipping information
+* SEO metadata
+* Error boundaries
+* Loading skeletons
+* Toast notifications
+* State management
+* Automated tests
+
+## License
+
+This project is for learning and development purposes.
