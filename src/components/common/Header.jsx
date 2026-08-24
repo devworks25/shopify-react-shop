@@ -1,49 +1,38 @@
-import { Link } from "react-router-dom";
+import LogoSection from "./LogoSection";
+import MegaMenu from "./MainNavigation";
+import UserActions from "./UserActions";
 
 export default function Header({ cartCount = 0 }) {
   return (
     <header className="border-b bg-white">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
-        <Link
-          to="/"
-          className="text-2xl font-bold text-gray-900"
-        >
-          MyStore
-        </Link>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
 
-        <nav className="flex items-center gap-6">
+        {/* Desktop Header */}
+        <div className="flex h-16 items-center justify-between">
 
-          <Link
-            to="/"
-            className="text-sm text-gray-600 hover:text-black"
-          >
-            Home
-          </Link>
+          {/* Logo */}
+          <LogoSection />
 
-          <Link
-            to="/products"
-            className="text-sm text-gray-600 hover:text-black"
-          >
-            Products
-          </Link>
+          {/* Desktop Navigation */}
+          <div className="hidden md:block">
+            <MegaMenu />
+          </div>
 
-          <Link
-            to="/cart"
-            className="relative text-sm font-medium text-gray-900"
-          >
-            Cart
+          {/* Cart / Login / Register */}
+          <div className="hidden md:block">
+            <UserActions cartCount={cartCount} />
+          </div>
 
-            {cartCount > 0 && (
-              <span className="ml-2 rounded-full bg-black px-2 py-1 text-xs text-white">
-                {cartCount}
-              </span>
-            )}
-          </Link>
+        </div>
 
-        </nav>
+        {/* Mobile Navigation */}
+        <div className="md:hidden">
+          <MegaMenu />
+        </div>
 
       </div>
+
     </header>
   );
 }
