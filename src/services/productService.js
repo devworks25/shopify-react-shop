@@ -124,3 +124,136 @@ export async function getProductByHandle(handle) {
 
   return data.product;
 }
+
+
+export async function getProductsByCollectionHandle({
+  handle,
+  first = null,
+  after = null,
+  last = null,
+  before = null,
+}) {
+  const QUERY = `
+    query GetCollectionProducts(
+      $handle: String!
+      $first: Int
+      $after: String
+      $last: Int
+      $before: String
+    ) {
+      collection(handle: $handle) {
+        id
+        title
+        handle
+        description
+
+        products(
+          first: $first
+          after: $after
+          last: $last
+          before: $before
+        ) {
+          nodes {
+            id
+            title
+            handle
+            description
+
+            featuredImage {
+              url
+              altText
+            }
+
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+
+              maxVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+
+            variants(first: 50) {
+              nodes {
+                id
+                title
+                availableForSale
+
+                price {
+                  amount
+                  currencyCode
+                }
+
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const { data, errors } =
+      await shopifyClient.request(QUERY, {
+        variables: {
+          handle,
+          first,
+          after,
+          last,
+          before,
+        },
+      });
+
+    /*
+     * =========================================
+     * GRAPHQL ERRORS
+     * =========================================
+     */
+
+    if (errors?.length) {
+      throw new Error(errors[0].message);
+    }
+
+    /*
+     * =========================================
+     * COLLECTION NOT FOUND
+     * =========================================
+     */
+
+    if (!data?.collection) {
+      throw new Error(
+        `Collection "${handle}" not found`
+      );
+    }
+
+    /*
+     * =========================================
+     * RETURN COLLECTION
+     * =========================================
+     */
+
+    return data.collection;
+
+  } catch (error) {
+    console.error(
+      "Failed to fetch collection products:",
+      error
+    );
+
+    throw error;
+  }
+}
