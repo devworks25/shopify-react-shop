@@ -1,4 +1,3 @@
-
 # Shopify React Shop
 
 A modern headless Shopify storefront built with **React, Vite, Tailwind CSS, React Router, and Shopify Storefront API**.
